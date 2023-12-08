@@ -396,18 +396,6 @@ console.log(person2.changeCity("New York"));
 //Добавьте в класс Employee метод calculateBonus, который будет принимать процент бонуса и увеличивать зарплату сотрудника на соответствующую сумму. Создайте объект employee2 на основе класса Employee и вызовите метод calculateBonus с процентом 10. Выведите новую зарплату сотрудника в консоль.
 //Подсказка: Используйте метод call или apply, чтобы вызвать метод calculateBonus для объекта employee2 и передать процент бонуса.
 
-// class Employee {
-// 	constructor (name, position, salary) {
-// 		this.name = name;
-// 		this.position = position;
-// 		this.salary = salary;
-// 	}
-
-// 	calculateBonus (bonus) {
-// 		return (this.salary + (this.salary * bonus / 100))
-// }
-// }
-
 class Employee {
 		constructor (name, position, salary) {
 			this.name = name;
