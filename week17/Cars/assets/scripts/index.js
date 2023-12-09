@@ -46,21 +46,11 @@ class Transport {
     }
 
     getInfo () {
-        return ``
+        return `Type: ${this.type}, Brand: ${this.brand}`;
     }
 
     getPrice () {
         return `Vehicle price: ${this.price}`;
-    }
-
-    showImage () {
-        const vehicleImage = document.createElement ('div');
-        
-
-    }
-
-    showVehicle () {
-
     }
 }
 
@@ -73,7 +63,6 @@ class Car extends Transport {
     return `Number of doors: ${this.doors}`;
 }
 }
-
 class Bike extends Transport {
     constructor (type, price, brand) {
     super (type, price, brand);
@@ -83,3 +72,49 @@ class Bike extends Transport {
     return `Max speed: ${this.maxSpeed}`;
 }
 }
+
+// Находим DOM-элементы
+
+    const list = document.querySelector('.vehicles');
+
+// Цикл
+
+function createElement (item) {
+
+    const vehiclesList = document.createElement('div');
+    list.append(vehiclesList);
+    vehiclesList.classList.add('vehicle-li');
+
+    const vehicleBrand = document.createElement('h3');
+    vehiclesList.append(vehicleBrand);
+    vehicleBrand.classList.add('vehicle-name');
+    vehicleBrand.textContent = item.brand;
+
+    const vehicleImg = document.createElement('img');
+    vehicleImg.src = item.image;
+    vehiclesList.append(vehicleImg);
+
+    const infoButton = document.createElement('button');
+    vehiclesList.append(infoButton);
+    infoButton.classList.add('infoButton');
+    infoButton.textContent = 'Get the info';
+
+    const priceButton = document.createElement('button');
+    vehiclesList.append(priceButton);
+    priceButton.classList.add('priceButton');
+    priceButton.textContent = 'Get the price';
+}
+
+for (let i = 0; i < data.length; i ++) {
+    
+    const audi = new Car ('car', 4300000, 'Audi', );
+    const mercedes = new Car ('car', 2800000, 'Mercedes-Benz');
+    const harley1 = new Bike ('bike', 1300000, 'Harley-Davidson' )
+    const harley2 = new Bike ('bike', 1400000, 'Harley-Davidson');
+
+    createElement(audi);
+    createElement(mercedes);
+    createElement(harley1);
+    createElement(harley2);
+}
+
