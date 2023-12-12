@@ -1,4 +1,3 @@
-
 // Массив объектов
 
 const data = [
@@ -36,142 +35,145 @@ const data = [
     }
   ];
 
-// Классы 
+// Классы
 
 class Transport {
-    constructor (type, price, brand, image) {
+    constructor( type, price, brand, image) {
         this.type = type;
         this.price = price;
         this.brand = brand;
         this.image = image;
     }
 
-    getInfo () {
-        // console.log(`Type: ${this.type}, brand: ${this.brand}`);
-        return `Type: ${this.type}, brand: ${this.brand}`;
+    getInfo() {
+        return {
+            type: this.type,
+            price: this.price,
+            brand: this.brand,
+        }
     }
 
-    getPrice () {
-        return `Vehicle price: ${this.price}`;
+    getType() {
+        return this.type;
+    }
+
+    getPrice() {
+        return this.price;
+    }
+
+    getBrand() {
+        return this.brand;
+    }
+
+    getImgSrc(){
+        return this.image;
     }
 }
-
 class Car extends Transport {
-    constructor (type, price, brand, image, doors) {
-    super (type, price, brand, image);
+    constructor(type, price, brand, image, doors) {
+    super(type, price, brand, image);
     this.doors = doors;
-}
-
-    getDoorsCount() {
-    return `Number of doors: ${this.doors}`;
-}
+    }
+    getDoorsCount(){
+        return this.doors;
+    }
 }
 class Bike extends Transport {
-    constructor (type, price, brand, image, maxSpeed) {
-    super (type, price, brand, image);
+    constructor(type, price, brand, image, maxSpeed) {
+    super(type, price, brand, image);
     this.maxSpeed = maxSpeed;
     }
+    getMaxSpeed(){
+        return this.maxSpeed;
+    }
+}
 
-    getMaxSpeed () {
-    return `Max speed: ${this.maxSpeed}`;
-}
-}
+// 2 массива 
+
+const carsArr = data
+.filter(({type}) => type === 'car')
+.map(({type, price, brand, image, doors}) => new Car(type, price, brand, image, doors));
+
+const bikesArr = data
+.filter(({type}) => type === 'bike')
+.map(({type, price, brand, image, maxSpeed}) => new Bike (type, price, brand, image, maxSpeed));
 
 // Находим DOM-элементы
 
-    const list = document.querySelector('.vehicles');
+const carsWrap = document.getElementById('cars');
+const bikesWrap = document.getElementById('bikes');
 
-// Цикл
+function createCarDiv (car) {
 
-function createElement (item) {
+// Контейнер для машин 
+let div = document.createElement('li');
+div.classList.add('car');
+carsWrap.appendChild(div);
 
-// Основная разметка
+// Заголовок
+const carTitle = document.createElement('h3');
+carTitle.classList.add('car__title');
+carTitle.innerText = car.getInfo().brand;
+div.appendChild(carTitle);
 
-    const vehiclesList = document.createElement('div');
-    list.append(vehiclesList);
-    vehiclesList.classList.add('vehicle-li');
+// Картинка
+const imageWrap = document.createElement('div');
+imageWrap.classList.add('car__imgWrap');
+div.appendChild(imageWrap);
+const image = document.createElement('img');
+image.setAttribute('src', car.getImgSrc());
+imageWrap.appendChild(image);
 
-    const vehicleBrand = document.createElement('h3');
-    vehiclesList.append(vehicleBrand);
-    vehicleBrand.classList.add('vehicle-name');
-    vehicleBrand.textContent = item.brand;
-    
-    const wrapper = document.createElement('div');
-    vehiclesList.append(wrapper);
-    const vehicleImg = document.createElement('img');
-    vehicleImg.src = item.image;
-    wrapper.append(vehicleImg);
-    vehicleImg.style.width = "400px";
+// Количество дверей
+const doorsCount = document.createElement('p');
+doorsCount.classList.add('car__doorsCount');
+doorsCount.innerText = `Количество дверей: ${car.getDoorsCount()}`;
+div.appendChild(doorsCount);
 
-// Кнопки и инфо
-
-    const info = document.createElement('div');
-    vehiclesList.append(info);
-    info.classList.add('info');
-
-// Кнопка с информацией
-
-    const infoButton = document.createElement('button');
-    info.append(infoButton);
-    infoButton.classList.add('infoButton');
-    infoButton.textContent = 'Get the info';
-
-// Кнопка с ценой
-
-    const priceButton = document.createElement('button');
-    info.append(priceButton);
-    priceButton.classList.add('priceButton');
-    priceButton.textContent = 'Get the price';
+// Цена
+const price = document.createElement('p');
+price.classList.add('car__price');
+price.innerText = `Цена: ${car.getPrice()} руб.`;
+div.appendChild(price);
 }
 
-// Кнопка с кол-вом дверей
+function createBikeDiv (bike) {
 
-function createDoorsButton () {
-    const info = document.createElement('div');
-    list.append(info);
-    info.classList.add('info');
-    const doorsButton = document.createElement('button');
-    info.append(doorsButton);
-    doorsButton.classList.add('doorsButton');
-    doorsButton.textContent = 'Get the number of doors';
+// Контейнер для байков 
+let div = document.createElement('li');
+div.classList.add('bike');
+bikesWrap.appendChild(div);
+
+// Заголовок
+const bikeHeader = document.createElement('h3');
+bikeHeader.classList.add('bike__header');
+bikeHeader.innerText = bike.getInfo().brand;
+div.appendChild(bikeHeader);
+
+// Картинка
+const imageWrap = document.createElement('div');
+imageWrap.classList.add('bike__imgWrap');
+div.appendChild(imageWrap);
+const image = document.createElement('img');
+image.setAttribute('src', bike.getImgSrc());
+imageWrap.appendChild(image);
+
+// Мксимальная скорость
+const speed = document.createElement('p');
+speed.classList.add('bike__speed');
+speed.innerText = `Максимальная скорость: ${bike.getMaxSpeed()} км/час`;
+div.appendChild(speed);
+
+// Цена
+const price = document.createElement('p');
+price.classList.add('bike__price');
+price.innerText = `Цена: ${bike.getPrice()} руб.`;
+div.appendChild(price);
 }
 
-// Кнопка с max скоростью 
+// Выводим на страницу
 
-function createMaxSpeedButton () {
-    const info = document.createElement('div');
-    list.append(info);
-    info.classList.add('info');
-    const maxSpeedButton = document.createElement('button');
-    info.append(maxSpeedButton);
-    maxSpeedButton.classList.add('maxSpeedButton');
-    maxSpeedButton.textContent = 'Get the maximum speed';
-}
+carsArr.forEach((car) => createCarDiv(car));
 
-function showMaxSpeed () {
-    const resultMaxSpeed = document.createElement('p');
-    list.append(resultMaxSpeed);
-    resultMaxSpeed.textContent = Bike.getMaxSpeed();
-}
+bikesArr.forEach((bike) => createBikeDiv(bike));
 
-for (let i = 0; i < data.length; i++) {
-    if (data[i].type === "car") {
-      const price = data[i].price;
-      const type = data[i].type;
-      const brand = data[i].brand;
-      const image = data[i].image;
-      const doors = data[i].doors;
-      createElement(new Car(type, price, brand, image, doors));
-      createDoorsButton ();
-    } else {
-      const price = data[i].price;
-      const type = data[i].type;
-      const brand = data[i].brand;
-      const image = data[i].image;
-      const maxSpeed = data[i].maxSpeed;
-      createElement(new Bike(type, price, brand, image, maxSpeed));
-      createMaxSpeedButton ();
-    }
-}
-
-document.querySelector('.maxSpeedButton').onclick = showMaxSpeed();
